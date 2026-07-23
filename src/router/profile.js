@@ -10,7 +10,7 @@ const { isStrongPassword } = require("validator");
 const bcrypt = require("bcrypt")
 
 // Profile api -> get details of existing user using TOKEN
-profileRouter.get("/profile" , userAuth,async (req,res) =>{
+profileRouter.get("/profile/view" , userAuth,async (req,res) =>{
 
     try{
         const user = req.user
@@ -27,20 +27,20 @@ profileRouter.get("/profile" , userAuth,async (req,res) =>{
 
 // NOT USED IN WeDevs app
 // GET /profile/view using mail
-profileRouter.get("/profile/view" , userAuth,async (req,res) =>{
-    try{
-        const userByEmail = await User.findOne({email : req.body.email})
-        // findOne gives one back find gives all that correspond with the requirement
-        if(userByEmail.length === 0){
-            res.status(404).send("User not found")
-        }
-        else res.send(userByEmail)
+// profileRouter.get("/profile/view" , userAuth,async (req,res) =>{
+//     try{
+//         const userByEmail = await User.findOne({email : req.body.email})
+//         // findOne gives one back find gives all that correspond with the requirement
+//         if(userByEmail.length === 0){
+//             res.status(404).send("User not found")
+//         }
+//         else res.send(userByEmail)
 
-    }
-    catch(err){
-        res.send("Something's OFF");
-    }
-})
+//     }
+//     catch(err){
+//         res.send("Something's OFF");
+//     }
+// })
 
 // PATCH /profile/edit
 profileRouter.patch("/profile/edit" ,userAuth, async (req,res) =>{
