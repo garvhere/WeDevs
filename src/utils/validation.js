@@ -19,7 +19,7 @@ const validateEmailEdit = (req) => {
     
     
     const ALLOWED_FIELDS = [
-    "lastName" , "skills" ,"about", "age"
+    "firstName" , "skills" ,"about", "age","photoUrl","gender"
     ]
     const isAllowed = Object.keys(data).every(
         (k) => ALLOWED_FIELDS.includes(k)

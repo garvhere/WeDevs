@@ -34,7 +34,7 @@ userRouter.get("/user/requests/received" , userAuth, async (req,res) => {
 })
 
 // GET my connections
-userRouter.get("/user/connections",userAuth,async (req,res) => {
+userRouter.get("/user/connections",userAuth, async(req,res) => {
     try{
         const loggedInUser = req.user
         const connections = await ConnectionRequest.find({
@@ -43,15 +43,21 @@ userRouter.get("/user/connections",userAuth,async (req,res) => {
                 {fromUserId: loggedInUser._id,status : "accepted"}
             ]
         })
-        .populate("fromUserId","firstName about")
-        .populate("toUserId","firstName about")
+        .populate("fromUserId","firstName about age photoUrl gender")
+        .populate("toUserId","firstName about age photoUrl gender")
 
+        // const data = connections.map((row) => {
+        //     if(row.fromUserId.toString() === loggedInUser._id.toString()){
+        //         // row.fromUserId._id.equals(loggedInUser._id)
+        //         return row.toUserId;
+        //     }
+        //     return row.fromUserId
+        // });
         const data = connections.map((row) => {
-            if(row.fromUserId.toString() === loggedInUser._id.toString()){
-                // row.fromUserId._id.equals(loggedInUser._id)
+            if (row.fromUserId._id.toString() === loggedInUser._id.toString()) {
                 return row.toUserId;
             }
-            return row.fromUserId
+            return row.fromUserId;  
         });
         // Go through every element in connections and create a new array containing only the fromUserId of each element.
         
@@ -101,7 +107,7 @@ userRouter.get("/user/feed" , userAuth, async (req,res) =>{
                 {_id : {$ne : loggedInUser._id}}
             ]
         })
-        .select("firstName lastName age about skills")
+        .select("firstName lastName age about skills photoUrl")
         .skip(skip)
         .limit(limit)
         

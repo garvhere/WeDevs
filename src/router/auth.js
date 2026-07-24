@@ -3,7 +3,7 @@ const express = require("express")
 const authRouter = express.Router()
 
 // imports 
-const isValid = require("../utils/validation");
+const {isValid} = require("../utils/validation");
 const bcrypt = require("bcrypt")
 const User = require("../model/user")
 
